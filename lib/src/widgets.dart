@@ -14,13 +14,7 @@ import 'theme.dart';
 /// keeps its own colors; use [SeaGlassSurface] for clipping and ink colors.
 class SeaGlass extends StatelessWidget {
   /// Creates sea glass behind [child]. Null values come from [SeaGlassTheme].
-  const SeaGlass({
-    super.key,
-    this.style,
-    this.palette,
-    this.shape,
-    this.child,
-  });
+  const SeaGlass({super.key, this.style, this.palette, this.shape, this.child});
 
   /// Recipe, or null for the theme's.
   final SeaGlassStyle? style;
@@ -79,12 +73,12 @@ class SeaGlassMaterial extends SingleChildRenderObjectWidget {
 
   @override
   RenderSeaGlass createRenderObject(BuildContext context) => RenderSeaGlass(
-        style: style,
-        palette: palette,
-        shape: shape,
-        clipContent: clipContent,
-        focusColor: focusColor,
-      );
+    style: style,
+    palette: palette,
+    shape: shape,
+    clipContent: clipContent,
+    focusColor: focusColor,
+  );
 
   @override
   void updateRenderObject(BuildContext context, RenderSeaGlass renderObject) {
@@ -211,8 +205,10 @@ class SeaGlassButton extends StatefulWidget {
     SeaGlassPalette? palette,
     SeaGlassShape? shape,
     SeaGlassComponentStyle? component,
-    EdgeInsetsGeometry padding =
-        const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+    EdgeInsetsGeometry padding = const EdgeInsets.symmetric(
+      horizontal: 24,
+      vertical: 16,
+    ),
     double gap = 8,
   }) {
     return SeaGlassButton(
@@ -225,7 +221,11 @@ class SeaGlassButton extends StatefulWidget {
       padding: padding,
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        children: [icon, SizedBox(width: gap), label],
+        children: [
+          icon,
+          SizedBox(width: gap),
+          label,
+        ],
       ),
     );
   }

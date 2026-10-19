@@ -25,7 +25,15 @@ class Contour {
 class ContourSegment {
   /// Creates a segment from its start, two controls and end point.
   const ContourSegment(
-      this.x0, this.y0, this.x1, this.y1, this.x2, this.y2, this.x3, this.y3);
+    this.x0,
+    this.y0,
+    this.x1,
+    this.y1,
+    this.x2,
+    this.y2,
+    this.x3,
+    this.y3,
+  );
 
   /// Start point.
   final double x0, y0;
@@ -74,7 +82,7 @@ Contour buildContour(
   final horizontal = math.max(0.0, w - radius * 2);
   final vertical = math.max(0.0, h - radius * 2);
   final lengths = [
-    horizontal, arc, vertical, arc, horizontal, arc, vertical, arc //
+    horizontal, arc, vertical, arc, horizontal, arc, vertical, arc, //
   ];
   final perimeter = lengths.fold<double>(0, (sum, n) => sum + n);
   final centers = [
@@ -134,8 +142,10 @@ Contour buildContour(
       : perimeter;
   final sigma = math.max(0.7, short * 0.065 / (curveLength / samples));
   final reach = (sigma * 3).ceil();
-  final weights = List<double>.generate(reach * 2 + 1,
-      (i) => math.exp(-math.pow(i - reach, 2) / (2 * sigma * sigma)));
+  final weights = List<double>.generate(
+    reach * 2 + 1,
+    (i) => math.exp(-math.pow(i - reach, 2) / (2 * sigma * sigma)),
+  );
   final weightSum = weights.fold<double>(0, (s, n) => s + n);
   final sx = Float64List(samples);
   final sy = Float64List(samples);
@@ -202,8 +212,10 @@ List<ContourSegment> contourSegments(Contour contour) {
 }
 
 /// Flattens the B-spline into a polygon with [steps] points per segment.
-(Float64List, Float64List) flattenSegments(List<ContourSegment> segments,
-    {int steps = 6}) {
+(Float64List, Float64List) flattenSegments(
+  List<ContourSegment> segments, {
+  int steps = 6,
+}) {
   final count = segments.length * steps;
   final xs = Float64List(count);
   final ys = Float64List(count);

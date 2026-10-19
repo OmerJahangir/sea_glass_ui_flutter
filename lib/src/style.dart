@@ -143,11 +143,21 @@ class SeaGlassStyle {
       other.seed == seed;
 
   @override
-  int get hashCode => Object.hash(frost, grain, tumble, thickness, bulge,
-      elevation, lightDegrees, transmission, seed);
+  int get hashCode => Object.hash(
+    frost,
+    grain,
+    tumble,
+    thickness,
+    bulge,
+    elevation,
+    lightDegrees,
+    transmission,
+    seed,
+  );
 
   @override
-  String toString() => 'SeaGlassStyle(frost: $frost, grain: $grain, '
+  String toString() =>
+      'SeaGlassStyle(frost: $frost, grain: $grain, '
       'tumble: $tumble, thickness: $thickness, bulge: $bulge, '
       'elevation: $elevation, lightDegrees: $lightDegrees, '
       'transmission: $transmission, seed: $seed)';
@@ -168,26 +178,47 @@ class SeaGlassPalette {
 
   /// Soft blue.
   static const SeaGlassPalette lagoon = SeaGlassPalette(
-      body: Color(0xFFB5D0EB), edge: Color(0xFFD6E9FF), ink: Color(0xFF2F647C));
+    body: Color(0xFFB5D0EB),
+    edge: Color(0xFFD6E9FF),
+    ink: Color(0xFF2F647C),
+  );
 
   /// Soft violet.
   static const SeaGlassPalette lilac = SeaGlassPalette(
-      body: Color(0xFFE1CDE8), edge: Color(0xFFFBE8F7), ink: Color(0xFF71388B));
+    body: Color(0xFFE1CDE8),
+    edge: Color(0xFFFBE8F7),
+    ink: Color(0xFF71388B),
+  );
 
   /// Soft pink.
   static const SeaGlassPalette rose = SeaGlassPalette(
-      body: Color(0xFFEECED6), edge: Color(0xFFFFF0F1), ink: Color(0xFF963F59));
+    body: Color(0xFFEECED6),
+    edge: Color(0xFFFFF0F1),
+    ink: Color(0xFF963F59),
+  );
 
   /// Soft honey.
   static const SeaGlassPalette amber = SeaGlassPalette(
-      body: Color(0xFFF0D9BE), edge: Color(0xFFFFFCE0), ink: Color(0xFF865733));
+    body: Color(0xFFF0D9BE),
+    edge: Color(0xFFFFFCE0),
+    ink: Color(0xFF865733),
+  );
 
   /// Soft green.
   static const SeaGlassPalette mint = SeaGlassPalette(
-      body: Color(0xFFC0DED0), edge: Color(0xFFE6FFF0), ink: Color(0xFF396C5A));
+    body: Color(0xFFC0DED0),
+    edge: Color(0xFFE6FFF0),
+    ink: Color(0xFF396C5A),
+  );
 
   /// The five built-in pigments.
-  static const List<SeaGlassPalette> values = [lagoon, lilac, rose, amber, mint];
+  static const List<SeaGlassPalette> values = [
+    lagoon,
+    lilac,
+    rose,
+    amber,
+    mint,
+  ];
 
   /// Body pigment.
   final Color body;
@@ -209,17 +240,17 @@ class SeaGlassPalette {
   }) {
     final (container, onContainer) = switch (role) {
       SeaGlassColorRole.primary => (
-          scheme.primaryContainer,
-          scheme.onPrimaryContainer
-        ),
+        scheme.primaryContainer,
+        scheme.onPrimaryContainer,
+      ),
       SeaGlassColorRole.secondary => (
-          scheme.secondaryContainer,
-          scheme.onSecondaryContainer
-        ),
+        scheme.secondaryContainer,
+        scheme.onSecondaryContainer,
+      ),
       SeaGlassColorRole.tertiary => (
-          scheme.tertiaryContainer,
-          scheme.onTertiaryContainer
-        ),
+        scheme.tertiaryContainer,
+        scheme.onTertiaryContainer,
+      ),
     };
     final body = container.withValues(alpha: 1);
     return SeaGlassPalette(
@@ -334,4 +365,3 @@ class SeaGlassComponentStyle {
   @override
   int get hashCode => Object.hash(material, palette, shape);
 }
-

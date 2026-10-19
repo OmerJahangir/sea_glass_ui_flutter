@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_sea_glass/flutter_sea_glass.dart';
+import 'package:sea_glass_ui_flutter/sea_glass_ui_flutter.dart';
 
 void main() => runApp(const SeaGlassExampleApp());
 

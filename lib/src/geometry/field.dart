@@ -15,10 +15,10 @@ class FieldRequest {
     required double tumble,
     required double bulge,
     required this.seed,
-  })  : width = _q(width, 2),
-        height = _q(height, 2),
-        tumble = _q(tumble, 4),
-        bulge = _q(bulge, 2);
+  }) : width = _q(width, 2),
+       height = _q(height, 2),
+       tumble = _q(tumble, 4),
+       bulge = _q(bulge, 2);
 
   static double _q(double v, int digits) {
     final f = math.pow(10, digits);
@@ -66,7 +66,12 @@ class FieldRequest {
 class PackedField {
   /// Creates a packed field.
   const PackedField(
-      this.width, this.height, this.slopeScale, this.pixelsA, this.pixelsB);
+    this.width,
+    this.height,
+    this.slopeScale,
+    this.pixelsA,
+    this.pixelsB,
+  );
 
   /// Texture width in samples.
   final int width;
@@ -93,8 +98,8 @@ const int maxFieldSamples = 262144;
 /// Bilinearly smoothed value noise on a seeded lattice.
 class _NoiseGrid {
   _NoiseGrid(double width, double height, this.spacing, SeededRandom random)
-      : columns = (width / spacing).ceil() + 2,
-        rows = (height / spacing).ceil() + 2 {
+    : columns = (width / spacing).ceil() + 2,
+      rows = (height / spacing).ceil() + 2 {
     values = Float32List(columns * rows);
     for (var i = 0; i < values.length; i++) {
       values[i] = random.next() * 2 - 1;
@@ -120,8 +125,13 @@ class _NoiseGrid {
 }
 
 /// Exact squared Euclidean distance transform along one line (Felzenszwalb).
-void _distanceLine(Float64List input, int length, Float64List output,
-    Int32List sites, Float64List separators) {
+void _distanceLine(
+  Float64List input,
+  int length,
+  Float64List output,
+  Int32List sites,
+  Float64List separators,
+) {
   var k = 0;
   sites[0] = 0;
   separators[0] = double.negativeInfinity;
@@ -158,8 +168,14 @@ void _distanceLine(Float64List input, int length, Float64List output,
 /// Mask pixel `(mx, my)` samples material point
 /// `((mx - 0.5) / scale, (my - 0.5) / scale)`, matching the original's one
 /// pixel border around the texture.
-void _rasterize(Uint8List mask, int columns, int rows, double scale,
-    Float64List xs, Float64List ys) {
+void _rasterize(
+  Uint8List mask,
+  int columns,
+  int rows,
+  double scale,
+  Float64List xs,
+  Float64List ys,
+) {
   final n = xs.length;
   final crossings = <double>[];
   for (var my = 0; my < rows; my++) {
@@ -174,7 +190,10 @@ void _rasterize(Uint8List mask, int columns, int rows, double scale,
     crossings.sort();
     for (var c = 0; c + 1 < crossings.length; c += 2) {
       final from = math.max(0, (crossings[c] * scale + 0.5).ceil());
-      final to = math.min(columns - 1, (crossings[c + 1] * scale + 0.5).floor());
+      final to = math.min(
+        columns - 1,
+        (crossings[c + 1] * scale + 0.5).floor(),
+      );
       for (var mx = from; mx <= to; mx++) {
         mask[my * columns + mx] = 1;
       }
@@ -182,12 +201,18 @@ void _rasterize(Uint8List mask, int columns, int rows, double scale,
   }
 }
 
-Float32List _smoothHeight(Float32List values, int width, int height,
-    double scale) {
+Float32List _smoothHeight(
+  Float32List values,
+  int width,
+  int height,
+  double scale,
+) {
   final sigma = 0.85 * scale;
   final reach = (sigma * 3).ceil();
-  final weights = List<double>.generate(reach * 2 + 1,
-      (i) => math.exp(-math.pow((i - reach) / sigma, 2) / 2));
+  final weights = List<double>.generate(
+    reach * 2 + 1,
+    (i) => math.exp(-math.pow((i - reach) / sigma, 2) / 2),
+  );
   final sum = weights.fold<double>(0, (t, v) => t + v);
   final horizontal = Float32List(values.length);
   final result = Float32List(values.length);
@@ -195,7 +220,8 @@ Float32List _smoothHeight(Float32List values, int width, int height,
     for (var x = 0; x < width; x++) {
       var value = 0.0;
       for (var k = -reach; k <= reach; k++) {
-        value += values[y * width + (x + k).clamp(0, width - 1)] *
+        value +=
+            values[y * width + (x + k).clamp(0, width - 1)] *
             weights[k + reach];
       }
       horizontal[y * width + x] = value / sum;
@@ -205,7 +231,8 @@ Float32List _smoothHeight(Float32List values, int width, int height,
     for (var x = 0; x < width; x++) {
       var value = 0.0;
       for (var k = -reach; k <= reach; k++) {
-        value += horizontal[(y + k).clamp(0, height - 1) * width + x] *
+        value +=
+            horizontal[(y + k).clamp(0, height - 1) * width + x] *
             weights[k + reach];
       }
       result[y * width + x] = value / sum;
@@ -243,7 +270,13 @@ PackedField buildField(FieldRequest request) {
   final worn = _NoiseGrid(w + 3, h + 3, 7.5, rand);
   final cloud = _NoiseGrid(w + 3, h + 3, short * 0.44, rand);
 
-  final contour = buildContour(w, h, request.shape, request.tumble, request.seed);
+  final contour = buildContour(
+    w,
+    h,
+    request.shape,
+    request.tumble,
+    request.seed,
+  );
   final (polyX, polyY) = flattenSegments(contourSegments(contour));
 
   final columns = width + 2, rows = height + 2;
@@ -319,9 +352,10 @@ PackedField buildField(FieldRequest request) {
       roundProfile[i] = arch * lengthArch;
       roundGradX[i] =
           (hasDirection ? dx / direction * roundSlope * lengthArch : 0) +
-              arch * lengthSlope;
-      roundGradY[i] =
-          hasDirection ? dy / direction * roundSlope * lengthArch : 0;
+          arch * lengthSlope;
+      roundGradY[i] = hasDirection
+          ? dy / direction * roundSlope * lengthArch
+          : 0;
     }
   }
 
@@ -335,10 +369,12 @@ PackedField buildField(FieldRequest request) {
       final blend = ((at(x + 1, y + 1) - 2) / 3).clamp(0.0, 1.0);
       final weight = blend * blend * (3 - 2 * blend);
       roundProfile[i] += (softened[i] - roundProfile[i]) * weight;
-      roundGradX[i] += ((heightAt(x + 2, y) - heightAt(x - 2, y)) * scale / 4 -
+      roundGradX[i] +=
+          ((heightAt(x + 2, y) - heightAt(x - 2, y)) * scale / 4 -
               roundGradX[i]) *
           weight;
-      roundGradY[i] += ((heightAt(x, y + 2) - heightAt(x, y - 2)) * scale / 4 -
+      roundGradY[i] +=
+          ((heightAt(x, y + 2) - heightAt(x, y - 2)) * scale / 4 -
               roundGradY[i]) *
           weight;
     }
@@ -353,14 +389,23 @@ PackedField buildField(FieldRequest request) {
     dome[i] = profile[i] + (roundProfile[i] - profile[i]) * bulge;
     slopeX[i] = gradX[i] + (roundGradX[i] - gradX[i]) * bulge;
     slopeY[i] = gradY[i] + (roundGradY[i] - gradY[i]) * bulge;
-    slopeScale = math.max(slopeScale, math.max(slopeX[i].abs(), slopeY[i].abs()));
+    slopeScale = math.max(
+      slopeScale,
+      math.max(slopeX[i].abs(), slopeY[i].abs()),
+    );
   }
   final pixelsA = Uint8List(count * 4);
   final pixelsB = Uint8List(count * 4);
   for (var i = 0; i < count; i++) {
     final p = i * 4;
-    final qx = ((0.5 + slopeX[i] / (2 * slopeScale)) * 65535).round().clamp(0, 65535);
-    final qy = ((0.5 + slopeY[i] / (2 * slopeScale)) * 65535).round().clamp(0, 65535);
+    final qx = ((0.5 + slopeX[i] / (2 * slopeScale)) * 65535).round().clamp(
+      0,
+      65535,
+    );
+    final qy = ((0.5 + slopeY[i] / (2 * slopeScale)) * 65535).round().clamp(
+      0,
+      65535,
+    );
     pixelsA[p] = qx >> 8;
     pixelsA[p + 1] = qx & 0xFF;
     pixelsA[p + 2] = (dome[i].clamp(0.0, 1.0) * 255).round();

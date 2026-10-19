@@ -1,6 +1,6 @@
-import 'package:flutter_sea_glass/src/geometry/contour.dart';
-import 'package:flutter_sea_glass/src/geometry/field.dart';
-import 'package:flutter_sea_glass/src/geometry/random.dart';
+import 'package:sea_glass_ui_flutter/src/geometry/contour.dart';
+import 'package:sea_glass_ui_flutter/src/geometry/field.dart';
+import 'package:sea_glass_ui_flutter/src/geometry/random.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Fixtures generated from the original web `sea-glass.mjs` with Node.
@@ -75,14 +75,16 @@ void main() {
 
   group('buildField', () {
     test('produces opaque textures with a raised middle', () {
-      final field = buildField(FieldRequest(
-        width: 120,
-        height: 48,
-        shape: ContourShape.rounded,
-        tumble: 0.025,
-        bulge: 0.65,
-        seed: 42,
-      ));
+      final field = buildField(
+        FieldRequest(
+          width: 120,
+          height: 48,
+          shape: ContourShape.rounded,
+          tumble: 0.025,
+          bulge: 0.65,
+          seed: 42,
+        ),
+      );
       expect(field.width, 120);
       expect(field.height, 48);
       expect(field.pixelsA.length, 120 * 48 * 4);
@@ -97,25 +99,31 @@ void main() {
     });
 
     test('caps very large fields to the sample budget', () {
-      final field = buildField(FieldRequest(
-        width: 2000,
-        height: 1000,
-        shape: ContourShape.rounded,
-        tumble: 0.02,
-        bulge: 0.5,
-        seed: 1,
-      ));
-      expect(field.width * field.height, lessThanOrEqualTo(maxFieldSamples + 2000));
+      final field = buildField(
+        FieldRequest(
+          width: 2000,
+          height: 1000,
+          shape: ContourShape.rounded,
+          tumble: 0.02,
+          bulge: 0.5,
+          seed: 1,
+        ),
+      );
+      expect(
+        field.width * field.height,
+        lessThanOrEqualTo(maxFieldSamples + 2000),
+      );
     });
 
     test('equal requests are equal after quantization', () {
       FieldRequest make(double w) => FieldRequest(
-          width: w,
-          height: 40,
-          shape: ContourShape.disc,
-          tumble: 0.03,
-          bulge: 0.6,
-          seed: 3);
+        width: w,
+        height: 40,
+        shape: ContourShape.disc,
+        tumble: 0.03,
+        bulge: 0.6,
+        seed: 3,
+      );
       expect(make(100.001), make(100.0));
       expect(make(100.2), isNot(make(100.0)));
     });

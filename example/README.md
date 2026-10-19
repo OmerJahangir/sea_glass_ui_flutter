@@ -1,6 +1,6 @@
-# flutter_sea_glass example
+# sea_glass_ui_flutter example
 
-A gallery and playground for `flutter_sea_glass`: buttons, surfaces, all five
+A gallery and playground for `sea_glass_ui_flutter`: buttons, surfaces, all five
 pigments, seeded tumble, live recipe sliders and Material You theming.
 
 ```bash

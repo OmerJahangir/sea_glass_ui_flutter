@@ -24,9 +24,9 @@ class SeaGlassTheme extends StatelessWidget {
     super.key,
     required SeaGlassComponentStyle this.component,
     required this.child,
-  })  : style = null,
-        palette = null,
-        shape = null;
+  }) : style = null,
+       palette = null,
+       shape = null;
 
   /// Recipe override, or null to inherit.
   final SeaGlassStyle? style;
@@ -45,16 +45,15 @@ class SeaGlassTheme extends StatelessWidget {
 
   /// The resolved defaults for [context].
   static SeaGlassComponentStyle of(BuildContext context) {
-    return context
-            .dependOnInheritedWidgetOfExactType<_SeaGlassScope>()
-            ?.data ??
+    return context.dependOnInheritedWidgetOfExactType<_SeaGlassScope>()?.data ??
         const SeaGlassComponentStyle();
   }
 
   @override
   Widget build(BuildContext context) {
     final parent = of(context);
-    final data = component ??
+    final data =
+        component ??
         SeaGlassComponentStyle(
           material: style ?? parent.material,
           palette: palette ?? parent.palette,

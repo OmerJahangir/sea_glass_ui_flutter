@@ -1,5 +1,5 @@
-name: flutter_sea_glass_example
-description: "Gallery and playground for flutter_sea_glass."
+name: sea_glass_ui_flutter_example
+description: "Gallery and playground for sea_glass_ui_flutter."
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -9,7 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_sea_glass:
+  sea_glass_ui_flutter:
     path: ../
 
 dev_dependencies:

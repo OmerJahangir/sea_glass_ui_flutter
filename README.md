@@ -1,4 +1,4 @@
-# flutter_sea_glass
+# sea_glass_ui_flutter
 
 Frosted color, softly tumbled edges, and a little seaside whimsy for Flutter.
 Wrap any widget in sea glass, or use the ready-made buttons and surfaces.
@@ -7,25 +7,25 @@ A Flutter port of [Sea Glass for Compose](https://github.com/mttmcknn/sea-glass)
 by Matt McKenna. The contour, geometry and lighting model follow the original.
 
 <p>
-  <img src="https://raw.githubusercontent.com/OmerJahangir/flutter_sea_glass/main/screenshots/01_gallery.png" width="260" alt="Sea glass buttons and surfaces">
-  <img src="https://raw.githubusercontent.com/OmerJahangir/flutter_sea_glass/main/screenshots/03_playground.png" width="260" alt="Playground controls">
+  <img src="https://raw.githubusercontent.com/OmerJahangir/sea_glass_ui_flutter/main/screenshots/01_gallery.png" width="260" alt="Sea glass buttons and surfaces">
+  <img src="https://raw.githubusercontent.com/OmerJahangir/sea_glass_ui_flutter/main/screenshots/03_playground.png" width="260" alt="Playground controls">
 </p>
 <p>
-  <img src="https://raw.githubusercontent.com/OmerJahangir/flutter_sea_glass/main/screenshots/02_tumble.png" width="400" alt="Seeded tumbled pebbles">
-  <img src="https://raw.githubusercontent.com/OmerJahangir/flutter_sea_glass/main/screenshots/04_material_you.png" width="400" alt="Material You glass">
+  <img src="https://raw.githubusercontent.com/OmerJahangir/sea_glass_ui_flutter/main/screenshots/02_tumble.png" width="400" alt="Seeded tumbled pebbles">
+  <img src="https://raw.githubusercontent.com/OmerJahangir/sea_glass_ui_flutter/main/screenshots/04_material_you.png" width="400" alt="Material You glass">
 </p>
 
 ## Install
 
 ```yaml
 dependencies:
-  flutter_sea_glass: ^0.1.0
+  sea_glass_ui_flutter: ^0.1.0
 ```
 
 ## Add some glass
 
 ```dart
-import 'package:flutter_sea_glass/flutter_sea_glass.dart';
+import 'package:sea_glass_ui_flutter/sea_glass_ui_flutter.dart';
 
 SeaGlassButton(
   palette: SeaGlassPalette.lagoon,

@@ -10,8 +10,13 @@ import '../geometry/field.dart';
 ///
 /// Each holder owns its own image handles; call [dispose] when done.
 class GeometryTextures {
-  GeometryTextures._(this.request, this.imageA, this.imageB, this.slopeScale,
-      this.byteSize);
+  GeometryTextures._(
+    this.request,
+    this.imageA,
+    this.imageB,
+    this.slopeScale,
+    this.byteSize,
+  );
 
   /// The request these textures were built for.
   final FieldRequest request;
@@ -30,7 +35,12 @@ class GeometryTextures {
 
   /// Returns a new handle to the same textures.
   GeometryTextures clone() => GeometryTextures._(
-      request, imageA.clone(), imageB.clone(), slopeScale, byteSize);
+    request,
+    imageA.clone(),
+    imageB.clone(),
+    slopeScale,
+    byteSize,
+  );
 
   /// Releases this handle.
   void dispose() {
@@ -90,12 +100,20 @@ class GeometryCache {
       final samples = request.width * request.height;
       final packed = samples <= _syncSampleLimit || kIsWeb
           ? buildField(request)
-          : await compute(_buildFieldEntry, request,
-              debugLabel: 'sea_glass_geometry');
+          : await compute(
+              _buildFieldEntry,
+              request,
+              debugLabel: 'sea_glass_geometry',
+            );
       final imageA = await _decode(packed.pixelsA, packed.width, packed.height);
       final imageB = await _decode(packed.pixelsB, packed.width, packed.height);
       final entry = GeometryTextures._(
-          request, imageA, imageB, packed.slopeScale, packed.byteSize);
+        request,
+        imageA,
+        imageB,
+        packed.slopeScale,
+        packed.byteSize,
+      );
       // Waiters clone this transfer handle, which outlives every microtask,
       // so a quick eviction from the cache cannot dispose it under them.
       final transfer = entry.clone();
@@ -107,12 +125,14 @@ class GeometryCache {
       return transfer;
     } catch (error, stack) {
       Timer.run(() => _building.remove(request));
-      FlutterError.reportError(FlutterErrorDetails(
-        exception: error,
-        stack: stack,
-        library: 'flutter_sea_glass',
-        context: ErrorDescription('while building sea glass geometry'),
-      ));
+      FlutterError.reportError(
+        FlutterErrorDetails(
+          exception: error,
+          stack: stack,
+          library: 'sea_glass_ui_flutter',
+          context: ErrorDescription('while building sea glass geometry'),
+        ),
+      );
       return null;
     }
   }
@@ -147,7 +167,12 @@ class GeometryCache {
   static Future<ui.Image> _decode(Uint8List pixels, int width, int height) {
     final completer = Completer<ui.Image>();
     ui.decodeImageFromPixels(
-        pixels, width, height, ui.PixelFormat.rgba8888, completer.complete);
+      pixels,
+      width,
+      height,
+      ui.PixelFormat.rgba8888,
+      completer.complete,
+    );
     return completer.future;
   }
 }

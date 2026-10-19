@@ -14,7 +14,7 @@ class SeaGlassShaderLoader {
   SeaGlassShaderLoader._();
 
   static const String _asset =
-      'packages/flutter_sea_glass/shaders/sea_glass_body.frag';
+      'packages/sea_glass_ui_flutter/shaders/sea_glass_body.frag';
 
   static ui.FragmentProgram? _program;
   static Future<ui.FragmentProgram?>? _loading;
@@ -32,8 +32,10 @@ class SeaGlassShaderLoader {
       (program) => _program = program,
       onError: (Object error, StackTrace stack) {
         _failed = true;
-        debugPrint('flutter_sea_glass: shader unavailable, using the '
-            'gradient fallback ($error)');
+        debugPrint(
+          'sea_glass_ui_flutter: shader unavailable, using the '
+          'gradient fallback ($error)',
+        );
         return null;
       },
     );
@@ -41,16 +43,21 @@ class SeaGlassShaderLoader {
 }
 
 ContourShape _contourShape(SeaGlassShape shape) => switch (shape) {
-      SeaGlassShape.rounded => ContourShape.rounded,
-      SeaGlassShape.capsule => ContourShape.capsule,
-      SeaGlassShape.disc => ContourShape.disc,
-    };
+  SeaGlassShape.rounded => ContourShape.rounded,
+  SeaGlassShape.capsule => ContourShape.capsule,
+  SeaGlassShape.disc => ContourShape.disc,
+};
 
 /// Builds the tumbled outline as a [Path] in local coordinates.
 Path seaGlassOutline(Size size, SeaGlassShape shape, SeaGlassStyle style) {
   final normalized = style.normalized();
-  final contour = buildContour(size.width, size.height, _contourShape(shape),
-      normalized.tumble, normalized.seed);
+  final contour = buildContour(
+    size.width,
+    size.height,
+    _contourShape(shape),
+    normalized.tumble,
+    normalized.seed,
+  );
   final segments = contourSegments(contour);
   final path = Path()..moveTo(segments.first.x0, segments.first.y0);
   for (final s in segments) {
@@ -70,12 +77,12 @@ class RenderSeaGlass extends RenderProxyBox {
     required bool clipContent,
     Color? focusColor,
     RenderBox? child,
-  })  : _style = style.normalized(),
-        _palette = palette,
-        _shape = shape,
-        _clipContent = clipContent,
-        _focusColor = focusColor,
-        super(child);
+  }) : _style = style.normalized(),
+       _palette = palette,
+       _shape = shape,
+       _clipContent = clipContent,
+       _focusColor = focusColor,
+       super(child);
 
   SeaGlassStyle _style;
   SeaGlassStyle get style => _style;
@@ -159,13 +166,13 @@ class RenderSeaGlass extends RenderProxyBox {
   }
 
   FieldRequest _request() => FieldRequest(
-        width: size.width,
-        height: size.height,
-        shape: _contourShape(_shape),
-        tumble: _style.tumble,
-        bulge: _style.bulge,
-        seed: _style.seed,
-      );
+    width: size.width,
+    height: size.height,
+    shape: _contourShape(_shape),
+    tumble: _style.tumble,
+    bulge: _style.bulge,
+    seed: _style.seed,
+  );
 
   /// Returns textures to draw now, requesting newer ones if needed. Keeps the
   /// last complete geometry on screen while a new one is prepared.
@@ -243,16 +250,13 @@ class RenderSeaGlass extends RenderProxyBox {
       if (focus != null) _paintFocus(context.canvas, offset, path, focus);
       return;
     }
-    context.pushClipPath(
-      needsCompositing,
+    context.pushClipPath(needsCompositing, offset, Offset.zero & size, path, (
+      context,
       offset,
-      Offset.zero & size,
-      path,
-      (context, offset) {
-        super.paint(context, offset);
-        if (focus != null) _paintFocus(context.canvas, offset, path, focus);
-      },
-    );
+    ) {
+      super.paint(context, offset);
+      if (focus != null) _paintFocus(context.canvas, offset, path, focus);
+    });
   }
 
   void _paintFocus(Canvas canvas, Offset offset, Path path, Color color) {
@@ -277,14 +281,23 @@ class RenderSeaGlass extends RenderProxyBox {
     final short = math.min(size.width, size.height);
     final t = s.transmission;
 
-    final castDrop =
-        math.min(16.0, s.thickness * 0.40 + s.elevation * 0.72 + s.bulge * short * 0.03);
+    final castDrop = math.min(
+      16.0,
+      s.thickness * 0.40 + s.elevation * 0.72 + s.bulge * short * 0.03,
+    );
     final castBlur = math.min(
-        6.0, 2.5 + s.elevation * 0.18 + s.frost * 0.7 + s.bulge * short * 0.018);
+      6.0,
+      2.5 + s.elevation * 0.18 + s.frost * 0.7 + s.bulge * short * 0.018,
+    );
     canvas.drawPath(
       path.shift(Offset(0, castDrop)),
       Paint()
-        ..color = Color.fromRGBO(63, 67, 66, (0.18 + s.elevation * 0.001) * (1 - t * 0.82))
+        ..color = Color.fromRGBO(
+          63,
+          67,
+          66,
+          (0.18 + s.elevation * 0.001) * (1 - t * 0.82),
+        )
         ..maskFilter = MaskFilter.blur(BlurStyle.normal, castBlur),
     );
 
@@ -293,7 +306,10 @@ class RenderSeaGlass extends RenderProxyBox {
       path.shift(Offset(0, contactDrop)),
       Paint()
         ..color = Color.fromRGBO(61, 65, 63, 0.10 * (1 - t * 0.70))
-        ..maskFilter = MaskFilter.blur(BlurStyle.normal, 1.4 + s.elevation * 0.065),
+        ..maskFilter = MaskFilter.blur(
+          BlurStyle.normal,
+          1.4 + s.elevation * 0.065,
+        ),
     );
 
     if (t > 0.001) {
@@ -362,8 +378,16 @@ class RenderSeaGlass extends RenderProxyBox {
     f(hx / halfLength);
     f(hy / halfLength);
     f(hz / halfLength);
-    shader.setImageSampler(0, geometry.imageA, filterQuality: FilterQuality.low);
-    shader.setImageSampler(1, geometry.imageB, filterQuality: FilterQuality.low);
+    shader.setImageSampler(
+      0,
+      geometry.imageA,
+      filterQuality: FilterQuality.low,
+    );
+    shader.setImageSampler(
+      1,
+      geometry.imageB,
+      filterQuality: FilterQuality.low,
+    );
 
     canvas.drawPath(path, Paint()..shader = shader);
   }
@@ -395,7 +419,11 @@ class RenderSeaGlass extends RenderProxyBox {
     final core = absorb(1.12);
     const white = Color(0xFFFFFFFF);
     final top = Color.lerp(core, white, 0.10 + s.bulge * 0.14)!;
-    final bottom = Color.lerp(core, edge.withValues(alpha: 1), 0.25 + s.transmission * 0.6)!;
+    final bottom = Color.lerp(
+      core,
+      edge.withValues(alpha: 1),
+      0.25 + s.transmission * 0.6,
+    )!;
     canvas.drawPath(
       path,
       Paint()
