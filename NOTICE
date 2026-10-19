@@ -1,0 +1,10 @@
+flutter_sea_glass
+Copyright 2026 Omer Jahangir
+
+This product is a Flutter port of Sea Glass for Compose
+(https://github.com/mttmcknn/sea-glass), Copyright Matt McKenna,
+licensed under the Apache License, Version 2.0.
+
+The contour generation, geometry field, material model and body shader are
+adapted from that project's web playground (web/dist/sea-glass.mjs) and its
+AGSL body shader (SeaGlassBodyShader.kt).

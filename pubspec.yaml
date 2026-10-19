@@ -1,0 +1,51 @@
+name: flutter_sea_glass
+description: >
+  Frosted, softly tumbled sea-glass buttons and surfaces for Flutter. A
+  procedural GPU material with seeded wonky outlines, palettes, and Material
+  You support. A Flutter port of Sea Glass for Compose.
+version: 0.1.0
+
+repository: https://github.com/OmerJahangir/flutter_sea_glass
+issue_tracker: https://github.com/OmerJahangir/flutter_sea_glass/issues
+
+topics:
+  - glass
+  - button
+  - shader
+  - widget
+  - ui
+
+environment:
+  sdk: ">=3.8.0 <4.0.0"
+  flutter: ">=3.32.0"
+
+platforms:
+  android:
+  ios:
+  linux:
+  macos:
+  web:
+  windows:
+
+screenshots:
+  - description: Sea glass buttons, a toolbar and surfaces in five pigments.
+    path: screenshots/01_gallery.png
+  - description: Seeded tumble gives every piece its own wonky outline.
+    path: screenshots/02_tumble.png
+  - description: Playground with frost, grain, tumble, bulge and light controls.
+    path: screenshots/03_playground.png
+  - description: Material You glass from the app's color scheme.
+    path: screenshots/04_material_you.png
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  shaders:
+    - shaders/sea_glass_body.frag
