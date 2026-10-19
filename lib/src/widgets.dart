@@ -1,3 +1,9 @@
+// Component API and behaviour (press offset, disabled alpha, focus ring)
+// adapted from SeaGlass.kt of
+// Sea Glass for Compose by Matt McKenna
+// (https://github.com/mttmcknn/sea-glass), licensed under Apache-2.0.
+// Modified for Flutter by Omer Jahangir, 2026.
+
 import 'package:flutter/material.dart';
 
 import 'render/render_sea_glass.dart';

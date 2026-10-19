@@ -1,3 +1,8 @@
+// Mulberry32 generator ported from `seededRandom` in web/dist/sea-glass.mjs of
+// Sea Glass for Compose by Matt McKenna
+// (https://github.com/mttmcknn/sea-glass), licensed under Apache-2.0.
+// Modified for Flutter by Omer Jahangir, 2026.
+
 /// 32-bit integer multiply with wraparound, matching JavaScript `Math.imul`.
 ///
 /// Split into 16-bit halves so the product stays exact on the web, where

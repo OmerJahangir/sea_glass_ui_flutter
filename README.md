@@ -19,7 +19,7 @@ by Matt McKenna. The contour, geometry and lighting model follow the original.
 
 ```yaml
 dependencies:
-  sea_glass_ui_flutter: ^0.1.0
+  sea_glass_ui_flutter: ^0.1.1
 ```
 
 ## Add some glass

@@ -1,5 +1,8 @@
-// Sea glass body. Ported from the AGSL body shader in Sea Glass for Compose
-// (Apache-2.0, Matt McKenna). Draw inside the tumbled outline path.
+// Sea glass body. Ported from the AGSL shader in SeaGlassBodyShader.kt of
+// Sea Glass for Compose by Matt McKenna
+// (https://github.com/mttmcknn/sea-glass), licensed under Apache-2.0.
+// Modified for Flutter by Omer Jahangir, 2026: translated to Flutter GLSL and
+// reads pre-blended 16-bit slope textures. Draw inside the tumbled outline.
 //
 // Coordinates are local logical pixels with the material's top-left at 0,0.
 // uGeometryA: R/G = X slope (16-bit), B = dome height.

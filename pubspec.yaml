@@ -3,7 +3,7 @@ description: >
   Frosted, softly tumbled sea-glass buttons and surfaces for Flutter. A
   procedural GPU material with seeded wonky outlines, palettes, and Material
   You support. A Flutter port of Sea Glass for Compose.
-version: 0.1.0
+version: 0.1.1
 
 repository: https://github.com/OmerJahangir/sea_glass_ui_flutter
 issue_tracker: https://github.com/OmerJahangir/sea_glass_ui_flutter/issues

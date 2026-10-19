@@ -1,3 +1,10 @@
+// Geometry field ported from `getGeometryField`, `distanceLine`,
+// `smoothHeight`, `noiseGrid` and the bulge blend in `prepareOptics`
+// (web/dist/sea-glass.mjs) of
+// Sea Glass for Compose by Matt McKenna
+// (https://github.com/mttmcknn/sea-glass), licensed under Apache-2.0.
+// Modified for Flutter by Omer Jahangir, 2026.
+
 import 'dart:math' as math;
 import 'dart:typed_data';
 

@@ -1,3 +1,9 @@
+// Ground layer parameters ported from `drawMaterial` in web/dist/sea-glass.mjs;
+// shader uniforms follow SeaGlassBodyShader.kt of
+// Sea Glass for Compose by Matt McKenna
+// (https://github.com/mttmcknn/sea-glass), licensed under Apache-2.0.
+// Modified for Flutter by Omer Jahangir, 2026.
+
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 

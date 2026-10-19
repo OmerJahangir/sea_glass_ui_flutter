@@ -1,3 +1,9 @@
+// Recipe defaults, presets, palettes and the Material color-scheme mapping
+// adapted from SeaGlassStyle.kt, SeaGlassTheme.kt and SeaGlassMaterialTheme.kt of
+// Sea Glass for Compose by Matt McKenna
+// (https://github.com/mttmcknn/sea-glass), licensed under Apache-2.0.
+// Modified for Flutter by Omer Jahangir, 2026.
+
 import 'package:flutter/material.dart';
 
 import 'theme.dart';

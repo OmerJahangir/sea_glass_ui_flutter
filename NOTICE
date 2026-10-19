@@ -1,10 +1,19 @@
 sea_glass_ui_flutter
 Copyright 2026 Omer Jahangir
 
-This product is a Flutter port of Sea Glass for Compose
-(https://github.com/mttmcknn/sea-glass), Copyright Matt McKenna,
-licensed under the Apache License, Version 2.0.
+This product is a Flutter port of Sea Glass for Compose by Matt McKenna
+(https://github.com/mttmcknn/sea-glass), licensed under the Apache License,
+Version 2.0.
 
-The contour generation, geometry field, material model and body shader are
-adapted from that project's web playground (web/dist/sea-glass.mjs) and its
-AGSL body shader (SeaGlassBodyShader.kt).
+Adapted from that project:
+- Outline generation, seeded random and geometry field
+  (from web/dist/sea-glass.mjs)
+- The material body shader (from SeaGlassBodyShader.kt)
+- Shadow and light-pool parameters (from web/dist/sea-glass.mjs)
+- Recipe defaults, presets, palettes and the public API design
+  (from SeaGlassStyle.kt, SeaGlassTheme.kt, SeaGlassMaterialTheme.kt and
+  SeaGlass.kt)
+
+These parts were modified for Flutter. Each adapted file states what it was
+ported from. The Flutter rendering, caching, widgets and example app are
+original to this package.
